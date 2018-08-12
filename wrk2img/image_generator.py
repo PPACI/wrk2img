@@ -1,0 +1,2 @@
+class ImageGenerator:
+    pass

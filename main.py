@@ -20,6 +20,7 @@ def cli():
     data, website = parser.parse_stdin()
     image_generator.generate_and_save_image(data, website, args.output)
 
+# TODO: Create another cli to generate multiple wrk2 call to one website and generate plot
 
 if __name__ == '__main__':
     cli()

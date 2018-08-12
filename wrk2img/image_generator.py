@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 
 
 class ImageGenerator:
+    # TODO: implement background color and transparent option
     def generate_and_save_image(self, data: Dict[float, Dict[float, float]], website: str, output: Path):
         figure = self.generate_image(data, website)
         self.save_image(figure, output)

@@ -5,6 +5,7 @@ from typing import Dict, Tuple
 
 class Parser:
     def __init__(self):
+        # TODO: Parse wrk2 output
         self.multiplier_per_unit = {
             "s": 1,
             "ms": 1e-3,

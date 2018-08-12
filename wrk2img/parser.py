@@ -1,4 +1,5 @@
 import re
+import sys
 from typing import List, Dict
 
 
@@ -9,7 +10,7 @@ class Parser:
         return parsed_wrk_output
 
     def read_stdin(self) -> List[str]:
-        raise NotImplementedError
+        return sys.stdin.readlines()
 
     def parse_wrk_output(self, wrk_output: List[str]) -> Dict[str, float]:
         parsed = {}  # type: Dict[str, float]

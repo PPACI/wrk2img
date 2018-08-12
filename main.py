@@ -16,8 +16,8 @@ def cli():
     parser = Parser()
     image_generator = ImageGenerator()
     args = parse_args()
-    # TODO: read STDOUT
-    # TODO: convert latency output to proper dict
+
+    data = parser.parse_stdin()
     # TODO: convert data to matplotlib
     # TODO: save matplotlib
 

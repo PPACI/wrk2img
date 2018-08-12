@@ -11,8 +11,15 @@ class TestImageGenerator(unittest.TestCase):
         self.image_generator = ImageGenerator()
 
     def test_generate_image(self):
-        data = {}
-        image = self.image_generator.generate_image(data)
+        data = {
+            748868.53: {
+                50: 250e-6,
+                75: 491e-6,
+                90: 700e-6,
+                99: 5.8e-3,
+            }
+        }
+        image = self.image_generator.generate_image(data, "localhost")
         self.assertIsNotNone(image)
         # TODO: write some assert
         with TemporaryDirectory(dir='.') as tempdir:

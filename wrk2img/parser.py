@@ -29,5 +29,6 @@ class Parser:
         # parse latency
         for matches in re.findall(" +(\d{2})% +(\d+\.?\d+)(\w+)", wrk_output):
             percentile, result, unit = matches
-            parsed[req_s][float(percentile)] = float(result) * self.multiplier_per_unit[unit]
+            scaled_result = round(float(result) * self.multiplier_per_unit[unit],9)
+            parsed[req_s][float(percentile)] = scaled_result
         return parsed, website

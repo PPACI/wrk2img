@@ -27,8 +27,15 @@ class Parser:
         req_s = float(re.search(" *Requests/sec: +(\d+\.?\d+)", wrk_output).group(1))
         parsed[req_s] = {}
         # parse latency
-        for matches in re.findall(" +(\d{2})% +(\d+\.?\d+)(\w+)", wrk_output):
+        for matches in re.findall(" +(\d+\.?\d*)% +(\d+\.?\d+)(\w+)", wrk_output):
             percentile, result, unit = matches
-            scaled_result = round(float(result) * self.multiplier_per_unit[unit],9)
+            scaled_result = round(float(result) * self.multiplier_per_unit[unit], 9)
             parsed[req_s][float(percentile)] = scaled_result
+        # parse detailed latency, only in wrk2 output
+        for matches in re.findall(r" +([\d\.]+) +([\d\.]+) +[\d\.]+ +[\d\.inf]+\n", wrk_output):
+            result, percentile = matches
+            percentile = float(percentile) * 100
+            scaled_result = round(float(result) * self.multiplier_per_unit["ms"], 9)
+            parsed[req_s][percentile] = scaled_result
+
         return parsed, website

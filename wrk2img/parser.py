@@ -23,7 +23,7 @@ class Parser:
 
     def parse_wrk_output(self, wrk_output: str) -> Tuple[Dict[float, Dict[float, float]], str]:
         parsed = {}  # type: Dict[float, Dict[float, float]]
-        website = re.search("Running \d+s test @ https?://(.+)/", wrk_output).group(1)
+        website = re.search(r"Running \d+s test @ https?://(.+?)[/\n]", wrk_output).group(1)
         req_s = float(re.search(" *Requests/sec: +(\d+\.?\d+)", wrk_output).group(1))
         parsed[req_s] = {}
         # parse latency

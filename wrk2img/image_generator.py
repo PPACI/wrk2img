@@ -28,4 +28,4 @@ class ImageGenerator:
         return fig
 
     def save_image(self, figure: Figure, output: Path):
-        figure.savefig(str(output.resolve()))
+        figure.savefig(str(output))

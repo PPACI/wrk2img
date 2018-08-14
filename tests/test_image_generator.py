@@ -23,7 +23,7 @@ class TestImageGenerator(unittest.TestCase):
         self.assertIsNotNone(image)
         # TODO: write some assert
         with TemporaryDirectory(dir='.') as tempdir:
-            output = Path(tempdir).joinpath('output.png')
+            output = Path(tempdir).resolve().joinpath('output.png')
             self.image_generator.save_image(image, output)
             self.assertTrue(output.exists())
 

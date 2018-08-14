@@ -20,7 +20,7 @@ class ImageGenerator:
         for label, values in data.items():
             x = list(values.keys())
             y = list(values.values())
-            ax.plot(x, y, label=str(label) + " req/s")
+            ax.scatter(x, y, label=str(label) + " req/s")
         ax.legend()
         ax.set(title="Latency graph for %s" % website,
                xlabel="percentile",

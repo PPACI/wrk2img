@@ -17,7 +17,7 @@ Python **3.5** is required.
 Direct usage : 
 * wrk : `wrk --latency http://localhost:8000 | wrk2img output.png`  
 * wrk2 : `wrk --latency -R 300 http://localhost:8000 | wrk2img output.png`  
-![output1](example1.jpg)
+![output1](./example1.jpg)
 
 Generating latency data at multiple load level using wrk2 and them combining them  
 ```
@@ -26,7 +26,7 @@ wrk --latency -R 500 http://localhost:8000 > 500
 wrk --latency -R 700 http://localhost:8000 > 700
 cat 300 500 700 | wrk2img output.png
 ```
-![output2](example2.jpg)
+![output2](./example2.jpg)
 
 # Feature
 * log scale

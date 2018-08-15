@@ -25,7 +25,12 @@ class Parser:
         return parsed_wrk_output
 
     def read_stdin(self) -> str:
-        return sys.stdin.read()
+        std = []
+        for line in sys.stdin:
+            print(line.rstrip())
+            std.append(line)
+        std_concat = "".join(std)
+        return std_concat
 
     def parse_wrk_output(self, wrk_output: str) -> Tuple[Dict[float, Dict[float, float]], str]:
         parsed = {}  # type: Dict[float, Dict[float, float]]

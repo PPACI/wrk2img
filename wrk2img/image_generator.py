@@ -4,15 +4,16 @@ from typing import Dict
 import matplotlib
 from matplotlib.axes import Axes
 
-matplotlib.use("Agg")
+matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 
 
 class ImageGenerator:
-    def __init__(self, transparent: bool = False, background: str = "FFFFFF"):
+    def __init__(self, transparent: bool = False, background: str = 'FFFFFF', log_scale: bool = False):
         self.transparent = transparent
-        self.background = "#" + background
+        self.background = '#' + background
+        self.scale = 'log' if log_scale else 'linear'
 
     # TODO: implement background color and transparent option
     def generate_and_save_image(self, data: Dict[float, Dict[float, float]], website: str, output: Path):
@@ -25,14 +26,19 @@ class ImageGenerator:
         for label, values in data.items():
             x, y = zip(*sorted(values.items()))
             y_ms = [v * 1000 for v in y]
-            ax.plot(x, y_ms, label=str(label) + " req/s")
-        ax.set_ylim(bottom=max(ax.get_ylim()[0], 0))
+            ax.plot(x, y_ms, label=str(label) + ' req/s')
+        if self.scale == 'linear':
+            ax.set_ylim(bottom=max(ax.get_ylim()[0], 0))
         ax.legend()
-        ax.set(title="Latency graph for %s" % website,
-               xlabel="percentile",
-               ylabel="latency [ms]",
+        ax.set(title='Latency graph for %s' % website,
+               xlabel='percentile',
+               ylabel='latency [ms]' if self.scale=='linear' else 'latency [ms] [log scale]',
+               yscale=self.scale,
                facecolor=self.background)
         return fig
 
     def save_image(self, figure: Figure, output: Path):
-        figure.savefig(str(output), transparent=self.transparent, facecolor=self.background)
+        if self.transparent:
+            figure.savefig(str(output), transparent=self.transparent)
+        else:
+            figure.savefig(str(output), facecolor=self.background)

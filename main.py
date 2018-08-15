@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument("output", type=Path, help="output file")
     parser.add_argument("-b", "--background", type=color, default="FFFFFF", metavar="FFFFFF", help="background color")
     parser.add_argument("-t", "--transparent", action="store_true", help="use a transparent background")
+    parser.add_argument("-l", "--log", action="store_true", help="use a log scale")
     return parser.parse_args()
 
 
@@ -23,7 +24,7 @@ def cli():
     args = parse_args()
 
     parser = Parser()
-    image_generator = ImageGenerator(transparent=args.transparent, background=args.background)
+    image_generator = ImageGenerator(transparent=args.transparent, background=args.background, log_scale=args.log)
 
     data, website = parser.parse_stdin()
     image_generator.generate_and_save_image(data, website, args.output)

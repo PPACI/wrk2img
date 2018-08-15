@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 
 
 class ImageGenerator:
-    def __init__(self, transparent: bool, background: str):
+    def __init__(self, transparent: bool = False, background: str = "FFFFFF"):
         self.transparent = transparent
         self.background = "#" + background
 

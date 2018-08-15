@@ -106,3 +106,6 @@ venv.bak/
 # IntelliJ
 .idea
 *.iml
+
+# image file
+*.png

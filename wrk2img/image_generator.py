@@ -15,7 +15,6 @@ class ImageGenerator:
         self.background = '#' + background
         self.scale = 'log' if log_scale else 'linear'
 
-    # TODO: implement background color and transparent option
     def generate_and_save_image(self, data: Dict[float, Dict[float, float]], website: str, output: Path):
         figure = self.generate_image(data, website)
         self.save_image(figure, output)
@@ -32,7 +31,7 @@ class ImageGenerator:
         ax.legend()
         ax.set(title='Latency graph for %s' % website,
                xlabel='percentile',
-               ylabel='latency [ms]' if self.scale=='linear' else 'latency [ms] [log scale]',
+               ylabel='latency [ms]' if self.scale == 'linear' else 'latency [ms] [log scale]',
                yscale=self.scale,
                facecolor=self.background)
         return fig

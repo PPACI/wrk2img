@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Dict
 
 import matplotlib
+from matplotlib.axes import Axes
 
 matplotlib.use("Agg")
 from matplotlib import pyplot as plt
@@ -16,15 +17,16 @@ class ImageGenerator:
 
     def generate_image(self, data: Dict[float, Dict[float, float]], website: str) -> Figure:
         fig = plt.figure(figsize=(7, 5))
-        ax = fig.add_subplot(1, 1, 1)
+        ax = fig.add_subplot(1, 1, 1)  # type: Axes
         for label, values in data.items():
-            x = list(values.keys())
-            y = list(values.values())
-            ax.scatter(x, y, label=str(label) + " req/s")
+            x, y = zip(*sorted(values.items()))
+            y_ms = [v*1000 for v in y]
+            ax.plot(x, y_ms, label=str(label) + " req/s")
+        ax.set_ylim(bottom=max(ax.get_ylim()[0],0))
         ax.legend()
         ax.set(title="Latency graph for %s" % website,
                xlabel="percentile",
-               ylabel="latency")
+               ylabel="latency [ms]")
         return fig
 
     def save_image(self, figure: Figure, output: Path):

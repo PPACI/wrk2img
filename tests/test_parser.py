@@ -43,7 +43,7 @@ class TestParser(unittest.TestCase):
             self.assertEqual(expected_results[path.stem]['website'], website, "bad website")
 
     def test_parse_empty_output(self):
-        path = Path('example/empty.txt')
+        path = Path('tests/example/empty.txt')
         with path.open() as file:
             wrk_output = file.read()
         self.assertEqual(str, type(wrk_output))
@@ -51,7 +51,7 @@ class TestParser(unittest.TestCase):
             parsed = self.parser.parse_wrk_output(wrk_output)
 
     def test_parse_multiple_wrk_output(self):
-        path = Path('example/multi').joinpath('wrk_cat')
+        path = Path('tests/example/multi').joinpath('wrk_cat')
         with path.open() as file:
             wrk_output = file.read()
         parsed = self.parser.parse_wrk_output(wrk_output)

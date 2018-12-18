@@ -13,5 +13,6 @@ deploy:
   provider: pypi
   user: PPACI
   password: $PYPI_PWD
+  skip_existing: true
   on:
     tags: true

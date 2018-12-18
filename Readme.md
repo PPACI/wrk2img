@@ -1,4 +1,5 @@
 # Wrk2Img
+![travis](https://travis-ci.org/PPACI/wrk2img.svg?branch=master)
 
 You find [wrk](https://github.com/wg/wrk) and [wrk2](https://github.com/giltene/wrk2) awesome for latency analysis but reading km of log file doesnt seems to be fun ?
 

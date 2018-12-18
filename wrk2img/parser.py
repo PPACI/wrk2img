@@ -1,7 +1,6 @@
 import re
 import sys
 from enum import Enum
-from re import RegexFlag
 from typing import Dict, Tuple
 
 
@@ -38,7 +37,7 @@ class Parser:
     def parse_wrk_output(self, wrk_output: str) -> Tuple[Dict[float, Dict[float, float]], str]:
         parsed = {}  # type: Dict[float, Dict[float, float]]
         websites = []
-        all_wrk_output = re.findall(RegexLibrary.split.value, wrk_output, flags=RegexFlag.DOTALL)
+        all_wrk_output = re.findall(RegexLibrary.split.value, wrk_output, flags=re.DOTALL)
         for single_wrk_output in all_wrk_output:
             websites.append(re.search(RegexLibrary.website.value, single_wrk_output).group(1))
             req_s = float(re.search(RegexLibrary.req_s.value, single_wrk_output).group(1))

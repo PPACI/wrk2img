@@ -21,16 +21,34 @@ class TestParser(unittest.TestCase):
                 wrk_output = file.read()
             self.assertEqual(str, type(wrk_output))
             parsed = self.parser.parse_wrk_output(wrk_output)
-            self.assertEqual(expected_results[str(path.stem)], parsed)
+            self.assertEqual(expected_results[path.stem], parsed)
 
     def test_parse_wrk2_output(self):
+        expected_results = {
+            'issue1': {'website': '127.0.0.1:8080', 'results': {1996.65: {50.0: 0.001183, 99.9: 0.03074}}},
+            'wrk2': {'website': '127.0.0.1:80', 'results': {2000.28: {50.0: 0.006671, 99.9: 0.0123}}},
+        }
         for path in glob('example/mono/wrk2/*'):
             path = Path(path)
             with path.open() as file:
                 wrk_output = file.read()
             self.assertEqual(str, type(wrk_output))
+            results, website = self.parser.parse_wrk_output(wrk_output)
+            self.assertEqual(expected_results[path.stem]['website'], website)
+            expected_website_results = expected_results[path.stem]
+            for req_s, latencies in expected_website_results['results'].items():
+                self.assertIn(req_s, results)
+                for percentile in [50.0, 99.9]:
+                    self.assertEqual(latencies[percentile], results[req_s][percentile])
+            self.assertEqual(expected_results[path.stem]['website'], website, "bad website")
+
+    def test_parse_empty_output(self):
+        path = Path('example/empty.txt')
+        with path.open() as file:
+            wrk_output = file.read()
+        self.assertEqual(str, type(wrk_output))
+        with self.assertRaises(ValueError):
             parsed = self.parser.parse_wrk_output(wrk_output)
-            self.assertGreater(len(parsed[0][2000.28]), 20)
 
     def test_parse_multiple_wrk_output(self):
         path = Path('example/multi').joinpath('wrk_cat')

@@ -6,11 +6,11 @@ from typing import Dict, Tuple
 
 
 class RegexLibrary(Enum):
-    website = r"Running \d+s test @ https?://(.+?)[/\n]"
+    website = r"Running \d+. test @ https?://(.+?)[/\n]"
     req_s = r" *Requests/sec: +(\d+\.?\d*)"
     latency = r" +(\d+\.?\d*)% +(\d+\.?\d*)(\w+)"
     detailed_latency = r" +([\d\.]+) +([\d\.]+) +[\d\.]+ +[\d\.inf]+\n"
-    split = r"Running \d+s test .+?Transfer\/sec: +\d+\.?\d*\w+"
+    split = r"Running \d+. test .+?Transfer\/sec: +\d+\.?\d*\w+"
     split_after_transfer = r" *Transfer\/sec: +\d+\.?\d*\w+(\n)"
 
 
@@ -54,6 +54,8 @@ class Parser:
                 percentile = float(percentile) * 100
                 scaled_result = round(float(result) * UnitMultiplier.ms.value, 9)
                 parsed[req_s][percentile] = scaled_result
+        if len(set(websites)) == 0:
+            raise ValueError("No website detected")
         if len(set(websites)) > 1:
             raise ValueError("Multiple different website detected in log")
         else:

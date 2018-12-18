@@ -12,7 +12,7 @@ def parse_args():
         else:
             return value
 
-    parser = argparse.ArgumentParser(description="Transforming wrk results to image", usage="wrk --latency http://localhost:8080 | wrk2img output.png")
+    parser = argparse.ArgumentParser(description="Transforming wrk results to image", usage="wrk --latency http://localhost.mono:8080 | wrk2img output.png")
     parser.add_argument("output", type=Path, help="output file")
     parser.add_argument("-b", "--background", type=color, default="FFFFFF", metavar="FFFFFF", help="background color")
     parser.add_argument("-t", "--transparent", action="store_true", help="use a transparent background")

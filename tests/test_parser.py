@@ -12,8 +12,8 @@ class TestParser(unittest.TestCase):
 
     def test_parse_wrk_output(self):
         expected_results = {
-            'wrk': ({748868.53: {50: 250e-6, 75: 491e-6, 90: 700e-6, 99: 5.8e-3}}, 'localhost:8080'),
-            'localhost': ({643.28: {50: 15.25e-3, 75: 15.46e-3, 90: 15.79e-3, 99: 22.67e-3, }}, '127.0.0.1:5000')
+            'wrk': ({'748868.53 req/s': {50: 250e-6, 75: 491e-6, 90: 700e-6, 99: 5.8e-3}}, 'localhost:8080'),
+            'localhost': ({'643.28 req/s': {50: 15.25e-3, 75: 15.46e-3, 90: 15.79e-3, 99: 22.67e-3, }}, '127.0.0.1:5000')
         }
         for path in glob('example/mono/wrk/*'):
             path = Path(path)
@@ -25,8 +25,8 @@ class TestParser(unittest.TestCase):
 
     def test_parse_wrk2_output(self):
         expected_results = {
-            'issue1': {'website': '127.0.0.1:8080', 'results': {1996.65: {50.0: 0.001183, 99.9: 0.03074}}},
-            'wrk2': {'website': '127.0.0.1:80', 'results': {2000.28: {50.0: 0.006671, 99.9: 0.0123}}},
+            'issue1': {'website': '127.0.0.1:8080', 'results': {'1996.65 req/s': {50.0: 0.001183, 99.9: 0.03074}}},
+            'wrk2': {'website': '127.0.0.1:80', 'results': {'2000.28 req/s': {50.0: 0.006671, 99.9: 0.0123}}},
         }
         for path in glob('example/mono/wrk2/*'):
             path = Path(path)
@@ -58,8 +58,9 @@ class TestParser(unittest.TestCase):
         self.assertEqual(str, type(wrk_output))
         self.assertEqual(2, len(parsed[0]))
         for i in [1, 2]:
-            self.assertIn(i, parsed[0])
-            self.assertGreater(len(parsed[0][i]), 20)
+            label = "{} req/s".format(float(i))
+            self.assertIn(label, parsed[0])
+            self.assertGreater(len(parsed[0][label]), 20)
 
 
 if __name__ == '__main__':

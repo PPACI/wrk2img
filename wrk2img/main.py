@@ -17,6 +17,7 @@ def parse_args():
     parser.add_argument("-b", "--background", type=color, default="FFFFFF", metavar="FFFFFF", help="background color")
     parser.add_argument("-t", "--transparent", action="store_true", help="use a transparent background")
     parser.add_argument("-l", "--log", action="store_true", help="use a log scale")
+    parser.add_argument("-n", "--names", default=None, help="Comma-separated curve names in the order they are given")
     return parser.parse_args()
 
 
@@ -26,7 +27,8 @@ def cli():
     parser = Parser()
     image_generator = ImageGenerator(transparent=args.transparent, background=args.background, log_scale=args.log)
 
-    data, website = parser.parse_stdin()
+    curve_names = args.names.split(",") if args.names is not None else []
+    data, website = parser.parse_stdin(curve_names=curve_names)
     image_generator.generate_and_save_image(data, website, args.output)
 
 

@@ -12,7 +12,7 @@ class TestImageGenerator(unittest.TestCase):
 
     def test_generate_image(self):
         data = {
-            748868.53: {
+            '748868.53 req/s': {
                 50: 250e-6,
                 75: 491e-6,
                 90: 700e-6,

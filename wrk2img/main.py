@@ -18,6 +18,7 @@ def parse_args():
     parser.add_argument("-t", "--transparent", action="store_true", help="use a transparent background")
     parser.add_argument("-l", "--log", action="store_true", help="use a log scale")
     parser.add_argument("-n", "--names", default=None, help="Comma-separated curve names in the order they are given")
+    parser.add_argument("-m", "--max-latency", type=int, default=100, help="Cut-off value for the latency")
     return parser.parse_args()
 
 
@@ -29,7 +30,7 @@ def cli():
 
     curve_names = args.names.split(",") if args.names is not None else []
     data, website = parser.parse_stdin(curve_names=curve_names)
-    image_generator.generate_and_save_image(data, website, args.output)
+    image_generator.generate_and_save_image(data, website, args.output, latency_until=args.max_latency)
 
 
 # TODO: Create another cli to generate multiple wrk2 call to one website and generate plot

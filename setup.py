@@ -5,7 +5,7 @@ with open('Readme.md') as f:
 
 setup(
     name='wrk2img',
-    version='1.0.3',
+    version='1.1.0',
     packages=find_packages(),
     url='https://github.com/PPACI/wrk2img',
     license='MIT',
